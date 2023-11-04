@@ -26,6 +26,7 @@ class AllowRequestMiddlewareTest extends TestCase
     }
 
     /** @test */
+    // TODO
     /*public function can_not_use_without_predis_client()
     {
         config()->set('database.redis.client', 'phpredis');
