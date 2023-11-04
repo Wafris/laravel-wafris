@@ -36,7 +36,7 @@ follow the instructions to link your Redis instance.
 composer require wafris/laravel-wafris
 ```
 
-### 3. Publush and configure Wafris
+### 3. Publish and configure Wafris
 
 You can publish the config file with:
 
@@ -44,11 +44,73 @@ You can publish the config file with:
 php artisan vendor:publish --tag="laravel-wafris-config"
 ```
 
+We recommend creating a separate Redis configuration for Wafris. That can be done in `config/database.php` with a new entry like this:
+
+```
+'redis' => [
+
+    'client' => env('REDIS_CLIENT', 'predis'), // Make sure to set your Redis client to predis
+
+    'options' => [
+        ...
+    ],
+
+    'default' => [
+        ...
+    ],
+
+    'cache' => [
+        ...
+    ],
+
+    'wafris' => [
+        'url' => env('REDIS_URL'),
+        'host' => env('REDIS_HOST', '127.0.0.1'),
+        'username' => env('REDIS_USERNAME'),
+        'password' => env('REDIS_PASSWORD'),
+        'port' => env('REDIS_PORT', '6379'),
+        'database' => env('REDIS_CACHE_DB', '3'),
+        'read_write_timeout' => 1, // Timeout in seconds
+    ],
+
+],
+```
+
 ## Usage
 
+Add the `Wafris\AllowRequestMiddleware` middleware to routes that you want to have protected by Wafris.
+
+### Protecting all routes
+
+Add `Wafris\AllowRequestMiddleware` to your middleware groups in `App\Providers\RouteServiceProvider`
+
 ```php
-$wafris = new Wafris();
-echo $wafris->echoPhrase('Hello, Wafris!');
+/**
+ * The application's route middleware groups.
+ *
+ * @var array
+ */
+protected $middlewareGroups = [
+    'web' => [
+        ...
+        \Wafris\AllowRequestMiddleware::class,
+    ],
+ 
+    'api' => [
+        ...
+        \Wafris\AllowRequestMiddleware::class,
+    ],
+];
+```
+
+### Protecting specific routes
+
+Use the `Wafris\AllowRequestMiddleware` middleware when defining your route.
+
+```php
+Route::get('/signup', function () {
+    // ...
+})->middleware(\Wafris\AllowRequestMiddleware::class,);
 ```
 
 ## Testing

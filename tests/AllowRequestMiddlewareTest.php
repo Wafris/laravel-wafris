@@ -2,9 +2,6 @@
 
 namespace Wafris\Tests;
 
-use Illuminate\Support\Facades\Redis;
-use RuntimeException;
-
 class AllowRequestMiddlewareTest extends TestCase
 {
     public function setUp(): void
@@ -28,13 +25,4 @@ class AllowRequestMiddlewareTest extends TestCase
         $response = $this->call('get', 'wafris');
         $this->assertEquals(200, $response->getStatusCode());
     }
-
-    /** @test */
-    // TODO
-    /*public function can_not_use_without_predis_client()
-    {
-        config()->set('database.redis.client', 'phpredis');
-        $this->expectException(RuntimeException::class);
-        $this->call('get', 'wafris');
-    }*/
 }
