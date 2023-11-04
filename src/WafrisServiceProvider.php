@@ -2,10 +2,10 @@
 
 namespace Wafris;
 
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Redis;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Foundation\Application;
 
 class WafrisServiceProvider extends PackageServiceProvider
 {

@@ -2,7 +2,7 @@
 
 return [
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Redis Connection Name
     |--------------------------------------------------------------------------
@@ -11,8 +11,8 @@ return [
     | this needs to correspond to a Redis connection defined in
     | config/database.php
     |
-	*/
+    */
 
-	'redis_connection' => 'default'
+    'redis_connection' => 'default',
 
 ];
