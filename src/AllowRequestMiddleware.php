@@ -20,6 +20,7 @@ class AllowRequestMiddleware
 
     protected function shouldAllow(Request $request): bool
     {
+<<<<<<< HEAD
         $response = $this->core->getRedis()->evalsha(
             $this->core->getHash(),
             0,
@@ -31,9 +32,20 @@ class AllowRequestMiddleware
             $request->getQueryString(),
             $request->host(),
             $request->method()
+=======
+    	$response = $this->core->getRedis()->evalsha(
+    		$this->core->getHash(),
+    		0,
+    		$request->ip(),
+    		ip2long($request->ip()), // TODO: Support ipv6
+    		time(),
+    		$request->userAgent(),
+    		$request->path(),
+    		$request->getQueryString(),
+    		$request->host(),
+    		$request->method()
+>>>>>>> 7d2a819 (Running tests)
         );
-
-        var_dump($response);
 
         return $response !== 'Blocked';
     }

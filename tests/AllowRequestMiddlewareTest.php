@@ -14,8 +14,7 @@ class AllowRequestMiddlewareTest extends TestCase
     /** @test */
     public function it_can_call_wafris()
     {
-        $response = $this->call('get', 'protected');
-        echo $response->getContent();
-        dd($response);
+        $response = $this->call('get', 'wafris-test');
+        $this->assertEquals(403, $response->getStatusCode());
     }
 }

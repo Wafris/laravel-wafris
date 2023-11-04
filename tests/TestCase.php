@@ -22,12 +22,17 @@ class TestCase extends Orchestra
         ];
     }
 
+    public function getEnvironmentSetUp($app)
+    {
+        config()->set('database.redis.client', 'predis');
+    }
+
     protected function setUpDummyRoutes()
     {
         $this->app['router']->group(
             ['middleware' => AllowRequestMiddleware::class],
             function () {
-                $this->app['router']->get('/protected', function () {
+                $this->app['router']->get('/wafris-test', function () {
                     return 'Hello world!';
                 });
             }
