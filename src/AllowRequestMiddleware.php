@@ -23,21 +23,22 @@ class AllowRequestMiddleware
     {
         try {
             $response = $this->core->getRedis()->evalsha(
-        		$this->core->getHash(),
-        		0,
-        		$request->ip(),
-        		ip2long($request->ip()), // TODO: Support ipv6
-        		time(),
-        		$request->userAgent(),
-        		$request->path(),
-        		$request->getQueryString(),
-        		$request->host(),
-        		$request->method()
+                $this->core->getHash(),
+                0,
+                $request->ip(),
+                ip2long($request->ip()), // TODO: Support ipv6
+                time(),
+                $request->userAgent(),
+                $request->path(),
+                $request->getQueryString(),
+                $request->host(),
+                $request->method()
             );
 
             return $response !== 'Blocked';
         } catch (Error $e) {
-            info('Wafris error: ' . $e->getMessage());
+            info('Wafris error: '.$e->getMessage());
+
             return true;
         }
     }

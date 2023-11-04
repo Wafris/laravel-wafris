@@ -2,11 +2,8 @@
 
 namespace Wafris;
 
-
-use RuntimeException;
-use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Redis\Connection as Redis;
+use RuntimeException;
 
 class Core
 {

@@ -31,7 +31,8 @@ class TestCase extends Orchestra
         config()->set('database.redis.default.prefix', '');
     }
 
-    protected function prepareRedis() {
+    protected function prepareRedis()
+    {
         $redis = Redis::connection(config('wafris.redis_connection'));
         $redis->flushdb();
         $redis->hset('rules-blocked-p', 'wafris-test', 'Test rule');
