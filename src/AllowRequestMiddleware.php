@@ -21,6 +21,10 @@ class AllowRequestMiddleware
 
     protected function shouldAllow(Request $request): bool
     {
+        if (! config('wafris.enabled')) {
+            return true;
+        }
+
         try {
             $response = $this->core->getRedis()->evalsha(
                 $this->core->getHash(),

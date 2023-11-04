@@ -4,6 +4,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Wafris enabled
+    |--------------------------------------------------------------------------
+    |
+    | Wafris is enabled per defualt, this option allows you to
+    | disable the Wafris middleware for an entire environment
+    |
+    */
+
+    'enabled' => env('WAFRIS_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Redis Connection Name
     |--------------------------------------------------------------------------
     |
