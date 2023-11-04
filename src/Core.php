@@ -2,6 +2,10 @@
 
 namespace Wafris;
 
+
+use RuntimeException;
+use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Redis\Connection as Redis;
 
 class Core
@@ -16,6 +20,10 @@ class Core
     {
         $core = file_get_contents(__DIR__.'/lua/dist/wafris_core.lua');
         $this->hash = $this->redis->script('load', $core);
+
+        if (config('database.redis.client' !== 'predis')) {
+            throw new RuntimeException('Please set your redis client configuration to predis');
+        }
     }
 
     public function getHash(): string
