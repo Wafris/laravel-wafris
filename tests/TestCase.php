@@ -4,6 +4,7 @@ namespace Wafris\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Wafris\AllowRequestMiddleware;
+use Wafris\WafrisServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -12,6 +13,13 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->setUpDummyRoutes();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            WafrisServiceProvider::class,
+        ];
     }
 
     protected function setUpDummyRoutes()
