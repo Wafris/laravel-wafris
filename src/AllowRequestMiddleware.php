@@ -3,8 +3,8 @@
 namespace Wafris;
 
 use Closure;
-use Error;
 use Illuminate\Http\Request;
+use Throwable;
 
 class AllowRequestMiddleware
 {
@@ -36,7 +36,7 @@ class AllowRequestMiddleware
             );
 
             return $response !== 'Blocked';
-        } catch (Error $e) {
+        } catch (Throwable $e) {
             info('Wafris error: '.$e->getMessage());
 
             return true;

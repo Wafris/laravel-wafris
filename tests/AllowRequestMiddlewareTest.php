@@ -2,6 +2,7 @@
 
 namespace Wafris\Tests;
 
+use Illuminate\Support\Facades\Redis;
 use RuntimeException;
 
 class AllowRequestMiddlewareTest extends TestCase
@@ -9,6 +10,9 @@ class AllowRequestMiddlewareTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->prepareRedis();
+        $this->setUpDummyRoutes();
     }
 
     /** @test */

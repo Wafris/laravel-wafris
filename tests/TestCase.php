@@ -9,14 +9,6 @@ use Wafris\WafrisServiceProvider;
 
 class TestCase extends Orchestra
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->prepareRedis();
-        $this->setUpDummyRoutes();
-    }
-
     protected function getPackageProviders($app)
     {
         return [

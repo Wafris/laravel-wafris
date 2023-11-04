@@ -4,6 +4,7 @@ namespace Wafris;
 
 use Illuminate\Contracts\Redis\Connection as Redis;
 use RuntimeException;
+use Throwable;
 
 class Core
 {
@@ -15,8 +16,12 @@ class Core
 
     public function load(): void
     {
-        $core = file_get_contents(__DIR__.'/lua/dist/wafris_core.lua');
-        $this->hash = $this->redis->script('load', $core);
+        try {
+            $luaCore = file_get_contents(__DIR__.'/lua/dist/wafris_core.lua');
+            $this->hash = $this->redis->script('load', $luaCore);
+        } catch (Throwable $e) {
+            info('Wafris error: '.$e->getMessage());
+        }
 
         if (config('database.redis.client' !== 'predis')) {
             throw new RuntimeException('Please set your redis client configuration to predis');
