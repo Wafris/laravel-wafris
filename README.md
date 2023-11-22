@@ -133,8 +133,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 - Twitter: [@wafrisorg](https://twitter.com/wafrisorg)
 - Booking: https://app.harmonizely.com/expedited/wafris
 
-<img src='https://uptimer.expeditedsecurity.com/laravel-wafris' width='0' height='0'>
-
 ## License
 
-Elastic License 2.0 - Please see [License File](LICENSE.md) for more information.
+Elastic License 2.0 - Please see [License File](LICENSE) for more information.
+
+<img src='https://uptimer.expeditedsecurity.com/laravel-wafris' width='0' height='0'>
