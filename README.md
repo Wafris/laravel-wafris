@@ -110,7 +110,7 @@ Use the `Wafris\AllowRequestMiddleware` middleware when defining your route.
 ```php
 Route::get('/signup', function () {
     // ...
-})->middleware(\Wafris\AllowRequestMiddleware::class,);
+})->middleware(\Wafris\AllowRequestMiddleware::class);
 ```
 
 ## Testing
