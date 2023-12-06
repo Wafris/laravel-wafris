@@ -41,7 +41,7 @@ composer require wafris/laravel-wafris
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-wafris-config"
+php artisan vendor:publish --tag="wafris-config"
 ```
 
 We recommend creating a separate Redis configuration for Wafris. That can be done in `config/database.php` with a new entry like this:
@@ -110,7 +110,7 @@ Use the `Wafris\AllowRequestMiddleware` middleware when defining your route.
 ```php
 Route::get('/signup', function () {
     // ...
-})->middleware(\Wafris\AllowRequestMiddleware::class,);
+})->middleware(\Wafris\AllowRequestMiddleware::class);
 ```
 
 ## Testing
