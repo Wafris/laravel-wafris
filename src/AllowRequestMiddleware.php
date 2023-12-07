@@ -31,7 +31,7 @@ class AllowRequestMiddleware
                 0,
                 $request->ip(),
                 ip2long($request->ip()), // TODO: Support ipv6
-                time(),
+                floor(microtime(true) * 1000),
                 $request->userAgent(),
                 $request->path(),
                 $request->getQueryString(),
