@@ -23,7 +23,7 @@ class Core
             info('Wafris error: '.$e->getMessage());
         }
 
-        if (config('database.redis.client' !== 'predis')) {
+        if (config('database.redis.client') !== 'predis') {
             throw new RuntimeException('Please set your redis client configuration to predis');
         }
     }
