@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/wafris/laravel-wafris/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/wafris/laravel-wafris/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/wafris/laravel-wafris.svg?style=flat-square)](https://packagist.org/packages/wafris/laravel-wafris)
 
-Wafris is an open-source Web Application Firewall (WAF) that runs within Rails (and other frameworks) powered by Redis. 
+Wafris is an open-source Web Application Firewall (WAF) that runs within Laravel (and other frameworks) powered by Redis. 
 
 Paired with [Wafris Hub](https://wafris.org/hub), you can create rules to block malicious traffic from hitting your application.
 
@@ -46,7 +46,7 @@ php artisan vendor:publish --tag="wafris-config"
 
 We recommend creating a separate Redis configuration for Wafris. That can be done in `config/database.php` with a new entry like this:
 
-```
+```php
 'redis' => [
 
     'client' => env('REDIS_CLIENT', 'predis'), // Make sure to set your Redis client to predis
@@ -82,32 +82,70 @@ Add the `Wafris\AllowRequestMiddleware` middleware to routes that you want to ha
 
 ### Protecting all routes
 
-Add `Wafris\AllowRequestMiddleware` to your middleware groups in `App\Providers\RouteServiceProvider`
+To protect all routes in your Laravel application, add `Wafris\AllowRequestMiddleware` to the `$middleware` property of your `app/Http/Kernel.php` class.
 
 ```php
+// app/Http/Kernel.php
+
 /**
- * The application's route middleware groups.
+ * The application's global HTTP middleware stack.
  *
- * @var array
+ * These middleware are run during every request to your application.
+ *
+ * @var array<int, class-string|string>
  */
-protected $middlewareGroups = [
-    'web' => [
-        ...
-        \Wafris\AllowRequestMiddleware::class,
-    ],
- 
-    'api' => [
-        ...
-        \Wafris\AllowRequestMiddleware::class,
-    ],
+protected $middleware = [
+    // \App\Http\Middleware\TrustHosts::class,
+    \App\Http\Middleware\TrustProxies::class,
+    \Illuminate\Http\Middleware\HandleCors::class,
+    \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+    \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+    \App\Http\Middleware\TrimStrings::class,
+    \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+    \Wafris\AllowRequestMiddleware::class,
 ];
 ```
 
-### Protecting specific routes
+### Protecting specific middleware groups
+
+To protect specific middleware groups, such as the `web` or `api` groups, add `Wafris\AllowRequestMiddleware` to each desired middleware group in your `app/Http/Kernel.php` class.
+
+```php
+// app/Http/Kernel.php
+
+/**
+ * The application's route middleware groups.
+ *
+ * @var array<string, array<int, class-string|string>>
+ */
+protected $middlewareGroups = [
+    'web' => [
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Wafris\AllowRequestMiddleware::class,
+    ],
+
+    'api' => [
+        // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Wafris\AllowRequestMiddleware::class,
+    ],
+];
+
+```
+
+### Protecting individual routes
 
 Use the `Wafris\AllowRequestMiddleware` middleware when defining your route.
 
 ```php
+// routes/web.php
+
 Route::get('/signup', function () {
     // ...
 })->middleware(\Wafris\AllowRequestMiddleware::class);
@@ -126,6 +164,10 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Contributors
+
+- [Jaryd Madlena](https://github.com/jmadlena)
 
 ## Help / Support
 
