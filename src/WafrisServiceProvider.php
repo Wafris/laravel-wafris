@@ -16,7 +16,7 @@ class WafrisServiceProvider extends PackageServiceProvider
             if (! config('wafris.enabled')) {
                 return null;
             }
-            
+
             $redis = Redis::connection(config('wafris.redis_connection'));
             $core = new Core($redis);
             $core->load();
