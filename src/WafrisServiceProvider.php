@@ -12,8 +12,11 @@ class WafrisServiceProvider extends PackageServiceProvider
     public function register(): void
     {
         parent::register();
-
         $this->app->singleton(Core::class, function (Application $app) {
+            if (! config('wafris.enabled')) {
+                return null;
+            }
+            
             $redis = Redis::connection(config('wafris.redis_connection'));
             $core = new Core($redis);
             $core->load();
