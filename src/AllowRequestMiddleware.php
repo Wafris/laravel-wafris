@@ -8,7 +8,7 @@ use Throwable;
 
 class AllowRequestMiddleware
 {
-    public function __construct(private Core $core)
+    public function __construct(private ?Core $core)
     {
     }
 
