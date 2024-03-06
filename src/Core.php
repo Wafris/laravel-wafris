@@ -19,7 +19,7 @@ class Core
         try {
             $luaCore = file_get_contents(__DIR__.'/lua/dist/wafris_core.lua');
             $this->hash = $this->redis->script('load', $luaCore);
-            $this->redis->hset('waf-settings', 'version', '0.0.3', 'client', 'laravel-wafris')
+            $this->redis->hset('waf-settings', 'version', '0.0.3', 'client', 'laravel-wafris');
         } catch (Throwable $e) {
             info('Wafris error: '.$e->getMessage());
         }
