@@ -82,6 +82,23 @@ Add the `Wafris\AllowRequestMiddleware` middleware to routes that you want to ha
 
 ### Protecting all routes
 
+To protect all routes in your Laravel application, add the `Wafris\AllowRequestMiddleware` globally.
+
+#### Laravel 11
+
+[Starting in Laravel 11](https://laravel.com/docs/11.x/middleware#global-middleware), middleware are registered in `bootstrap/app.php`. Add the following line in the `withMiddleware` section of that file:
+
+```php
+Application::configure(basePath: dirname(__DIR__))
+    // ...
+    ->withMiddleware(function (Middleware $middleware) {
+        // ... other middleware
+        $middleware->append(\Wafris\AllowRequestMiddleware::class);
+    });
+```
+
+### Laravel 10  
+
 To protect all routes in your Laravel application, add `Wafris\AllowRequestMiddleware` to the `$middleware` property of your `app/Http/Kernel.php` class.
 
 ```php
